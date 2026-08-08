@@ -38,8 +38,8 @@ export default function Home() {
         label: food.name,
       }));
       setFoods(foodReduced);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setFoods([]);
     }
   };
 

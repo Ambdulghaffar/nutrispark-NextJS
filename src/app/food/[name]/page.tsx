@@ -20,6 +20,12 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
     try {
       const APIQueryURL = `/api/foods/${name}`;
       const response = await fetch(APIQueryURL);
+
+      if (!response.ok) {
+        setFood(null);
+        return;
+      }
+
       const data = await response.json();
 
       // Macronutriments
@@ -32,8 +38,8 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
 
       //Food general
       setFood(data);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setFood(null);
     } finally {
       setIsLoading(false);
     }
@@ -46,19 +52,39 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
     initialize();
   }, [name]);
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-white">
+        <p className="text-2xl">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!food) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen text-white gap-4">
+        <p className="text-2xl">Aliment introuvable</p>
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-2 underline cursor-pointer"
+        >
+          <Undo2 className="text-white" /> Retour
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {!isLoading && food && macronutrinments ? (
-        <div className="p-8 text-white">
-          <Undo2
-            className="cursor-pointer mb-5 text-white"
-            onClick={() => router.back()}
-          />
-          <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl lg: text-7xl">
-            {food.name}
-          </h1>
-          <div className=" flex flex-col md:flex-row items-center md:items-start ">
-            <div className="w-full md:w-1/2 lg:-1/3 mb-8 md:mb-0">
+    <div className="p-8 text-white">
+      <Undo2
+        className="cursor-pointer mb-5 text-white"
+        onClick={() => router.back()}
+      />
+      <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
+        {food.name}
+      </h1>
+      <div className=" flex flex-col md:flex-row items-center md:items-start ">
+        <div className="w-full md:w-1/2 lg:w-1/3 mb-8 md:mb-0">
               <ResponsiveContainer width="100%" height={200}>
                 <PieChart>
                   <Pie
@@ -106,7 +132,7 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
                   </div>
                 </div>{" "}
                 <div className="flex items-center mb-2">
-                  <div className="w-5 h-5 bg-[##5079F2] border border-gray-700 mr-3 "></div>
+                  <div className="w-5 h-5 bg-[#5079F2] border border-gray-700 mr-3 "></div>
                   <div>
                     Protein:{" "}
                     <span className="font-medium">{food.protein} g</span>
@@ -122,7 +148,7 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
               <div className="mt-4 ">
                 <div className="flex items-center mb-2">
                   <Image
-                    src="/Vitamins.png"
+                    src="/vitamins.png"
                     width={30}
                     height={30}
                     alt="Vitamins"
@@ -134,7 +160,7 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
                 </div>{" "}
                 <div className="flex items-center mb-2">
                   <Image
-                    src="/Minerals.png"
+                    src="/minerals.png"
                     width={30}
                     height={30}
                     alt="Minerals"
@@ -148,13 +174,8 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
             </div>
           </div>
         </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen text-white">
-          <p className="text-2xl">Loading...</p>
-        </div>
-      )}
-    </>
   );
 };
+
 
 export default FoodPage;
