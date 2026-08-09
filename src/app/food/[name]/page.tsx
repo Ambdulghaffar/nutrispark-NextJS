@@ -5,6 +5,7 @@ import { IFood, IMacronutrientData } from "@/types";
 import { useRouter } from "next/navigation";
 import { Undo2 } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { FavoriteButton } from "@/components/favorite-button";
 
 const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = use(params);
@@ -80,8 +81,9 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
         className="cursor-pointer mb-5 text-white"
         onClick={() => router.back()}
       />
-      <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
+      <h1 className="mb-6 flex items-center gap-3 text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
         {food.name}
+        <FavoriteButton slug={name} iconClassName="size-8" />
       </h1>
       <div className=" flex flex-col md:flex-row items-center md:items-start ">
         <div className="w-full md:w-1/2 lg:w-1/3 mb-8 md:mb-0">

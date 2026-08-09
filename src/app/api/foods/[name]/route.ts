@@ -1,4 +1,5 @@
 import { foods } from "@/data";
+import { slugify } from "@/lib/utils";
 
 export async function GET(
   request: Request,
@@ -6,9 +7,7 @@ export async function GET(
 ) {
   const { name } = await params;
 
-  const index = foods.findIndex(
-    (food) => food.name.toLowerCase().replace(/ /g, "-") === name
-  );
+  const index = foods.findIndex((food) => slugify(food.name) === name);
 
   if (index !== -1) {
     return new Response(JSON.stringify(foods[index]), {

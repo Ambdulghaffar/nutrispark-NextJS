@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FavoriteButton } from "@/components/favorite-button";
 import {
   Command,
   CommandEmpty,
@@ -34,7 +35,7 @@ export default function Home() {
       const response = await fetch("/api/foods/all");
       const data = await response.json();
       const foodReduced: IFoodReduced[] = data.map((food: IFood) => ({
-        value: food.name.toLowerCase().replace(/ /g, "-"),
+        value: slugify(food.name),
         label: food.name,
       }));
       setFoods(foodReduced);
@@ -104,6 +105,7 @@ export default function Home() {
                             value === food.value ? "opacity-100" : "opacity-0"
                           )}
                         />
+                        <FavoriteButton slug={food.value} className="ml-1" />
                       </CommandItem>
                     ))}
                   </CommandGroup>
