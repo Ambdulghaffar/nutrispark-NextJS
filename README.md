@@ -76,7 +76,7 @@ Open [http://localhost:3000](http://localhost:3000). No environment variables ar
 
 ## Live Demo
 
-[Live demo](URL_TO_FILL)
+[Live demo](https://nutrispark-next-js.vercel.app/)
 
 ## License
 
