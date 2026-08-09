@@ -62,7 +62,7 @@ export default function Home() {
     <>
       {!isLoading ? (
         <div className="min-h-screen text-white flex flex-col items-center justify-center p-6">
-          <h1 className="text-5xl font-extrabold mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-center">
             Welcome to <span className="title_colored">Nutrispark</span>
           </h1>
           <p className="text-lg mb-8 text-center">
@@ -75,7 +75,7 @@ export default function Home() {
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[300px] justify-between"
+                className="w-full max-w-[300px] justify-between"
               >
                 {value
                   ? foods.find((food) => food.value === value)?.label
@@ -83,7 +83,7 @@ export default function Home() {
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[300px] p-0">
+            <PopoverContent className="w-[calc(100vw-3rem)] max-w-[300px] p-0">
               <Command>
                 <CommandInput placeholder="Search food..." className="h-9" />
                 <CommandList>
@@ -98,14 +98,17 @@ export default function Home() {
                           setOpen(false);
                         }}
                       >
-                        {food.label}
+                        <span className="truncate">{food.label}</span>
                         <Check
                           className={cn(
-                            "ml-auto",
+                            "ml-auto shrink-0",
                             value === food.value ? "opacity-100" : "opacity-0"
                           )}
                         />
-                        <FavoriteButton slug={food.value} className="ml-1" />
+                        <FavoriteButton
+                          slug={food.value}
+                          className="ml-1 shrink-0"
+                        />
                       </CommandItem>
                     ))}
                   </CommandGroup>
