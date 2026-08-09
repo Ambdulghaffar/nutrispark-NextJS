@@ -41,12 +41,12 @@ function validate(body: unknown): { data: TdeeRequestBody } | { error: string } 
     return { error: "sex must be either 'male' or 'female'." };
   }
 
-  if (typeof weight !== "number" || !Number.isFinite(weight) || weight <= 0) {
-    return { error: "weight must be a positive number (kg)." };
+  if (typeof weight !== "number" || !Number.isFinite(weight) || weight < 20 || weight > 300) {
+    return { error: "weight must be a number between 20 and 300 (kg)." };
   }
 
-  if (typeof height !== "number" || !Number.isFinite(height) || height <= 0) {
-    return { error: "height must be a positive number (cm)." };
+  if (typeof height !== "number" || !Number.isFinite(height) || height < 50 || height > 250) {
+    return { error: "height must be a number between 50 and 250 (cm)." };
   }
 
   if (!isActivityLevel(activityLevel)) {

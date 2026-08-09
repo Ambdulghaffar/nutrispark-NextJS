@@ -69,8 +69,8 @@ export default function CalculatorPage() {
         body: JSON.stringify({
           age: Number(age),
           sex,
-          weight: Number(weight),
-          height: Number(height),
+          weight: Number(weight.replace(",", ".")),
+          height: Number(height.replace(",", ".")),
           activityLevel,
         }),
       });
