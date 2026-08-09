@@ -13,6 +13,9 @@ export function Nav() {
         <Link href="/calculator" className="hover:underline">
           Calculator
         </Link>
+        <Link href="/journal" className="hover:underline">
+          Journal
+        </Link>
         <Link href="/favorites" className="hover:underline">
           Favorites
         </Link>

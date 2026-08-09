@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import { Undo2 } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { FavoriteButton } from "@/components/favorite-button";
+import { useJournal } from "@/hooks/use-journal";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = use(params);
@@ -16,6 +20,21 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
     IMacronutrientData[]
   >([]);
   const COLORS = ["#F28907", "#5079F2", "#F2220F"];
+
+  const { addEntry } = useJournal();
+  const [quantity, setQuantity] = useState("100");
+  const [journalFeedback, setJournalFeedback] = useState<string | null>(null);
+
+  const handleAddToJournal = () => {
+    const parsedQuantity = Number(quantity.replace(",", "."));
+    if (!Number.isFinite(parsedQuantity) || parsedQuantity <= 0) {
+      setJournalFeedback("Enter a valid quantity in grams.");
+      return;
+    }
+    addEntry(name, parsedQuantity);
+    setJournalFeedback(`Added ${parsedQuantity}g to your journal.`);
+    window.setTimeout(() => setJournalFeedback(null), 2500);
+  };
 
   const fetchFood = async () => {
     try {
@@ -145,6 +164,30 @@ const FoodPage = ({ params }: { params: Promise<{ name: string }> }) => {
                   <div>
                     Fat: <span className="font-medium">{food.fat} g</span>
                   </div>
+                </div>
+              </div>
+              <div className="mb-4 p-4 text-white bg-gray-800 rounded-lg shadow-inner">
+                <div className="flex flex-wrap items-end gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="journal-quantity">Quantity (g)</Label>
+                    <Input
+                      id="journal-quantity"
+                      type="number"
+                      min={1}
+                      step="1"
+                      className="w-28"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                  </div>
+                  <Button type="button" onClick={handleAddToJournal}>
+                    Add to journal
+                  </Button>
+                  {journalFeedback && (
+                    <p className="text-sm text-muted-foreground" role="status">
+                      {journalFeedback}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mt-4 ">

@@ -11,7 +11,7 @@ Ordered checklist of fixes, chores, features, and polish items. See `docs/diagno
 - [x] Chore: npm audit fix --force to resolve the 11 vulnerabilities (2 critical)
 - [x] Feature: TDEE/calorie needs calculator (age/weight/height/activity level, Harris-Benedict formula), calculated via a real POST /api/calculator/tdee route (server-side calculation, no persistence — request in, result out)
 - [x] Feature: Favorites (heart icon on food list + detail page, persisted in localStorage)
-- [ ] Feature: Daily food journal (add a food + quantity from its detail page, running daily totals for calories/macros, persisted in localStorage, displayed against the TDEE goal from the calculator as a progress indicator — e.g. "1450 / 2200 kcal today")
+- [x] Feature: Daily food journal (add a food + quantity from its detail page, running daily totals for calories/macros, persisted in localStorage, displayed against the TDEE goal from the calculator as a progress indicator — e.g. "1450 / 2200 kcal today")
 - [ ] Polish: responsive audit on the home page (currently no responsive treatment at all)
 - [ ] Polish: fix responsive typos on the food detail page so the existing md: breakpoint work actually takes effect
 - [ ] Deploy to Vercel
